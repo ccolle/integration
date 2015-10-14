@@ -16,6 +16,8 @@ To build the code you need CMake.
 
   -  $> cd build;
 
+  -  $> cmake -DCMAKE_BUILD_TYPE=[RELEASE|DEBUG|...] ..
+
   -  $> make;
 
   -  $> make install;
