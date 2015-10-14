@@ -12,3 +12,14 @@ If you wish to add your own integration routines, see "*_wrapper.hpp" in inc/
 You can always ask camille for some help...
 
 
+To build the code you need CMake.
+
+$> cd build;
+$> make
+$> make install
+
+
+Now you are all set. To use this in your code, include the headers in inc/
+and link to the libraries in lib/
+
+
