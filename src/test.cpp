@@ -4,6 +4,7 @@
 #include "integrator.hpp"
 #include "cuba_wrappers.hpp"
 #include "gsl_wrappers.hpp"
+#include "cubature_wrappers.hpp"
 
 
 /********************************************/
@@ -99,6 +100,22 @@ void test_gsl(){
     integrate(m);
 }
 
+void test_cubature(){
+    Integrator_hcubature hc;
+    hc.maxEval = 100000;
+    hc.epsabs  = 0.;
+    hc.epsrel  = 1e-4;
+    
+    integrate(hc);
+
+    Integrator_pcubature pc;
+    pc.maxEval = 100000;
+    pc.epsabs  = 0.;
+    pc.epsrel  = 1e-4;
+
+    integrate(pc);
+}
+
 void test_1d(){
     Cuba_common c;
     c.nvec    = 1;
@@ -136,11 +153,25 @@ void test_1d(){
     q.epsrel = 1e-5;
     q.key    = 6;
     integrate1d(q);
+
+    Integrator_hcubature hc;
+    hc.maxEval = 100000;
+    hc.epsabs = 1e-5;
+    hc.epsrel = 1e-5;
+    integrate1d(hc);
+
+    Integrator_pcubature pc;
+    pc.maxEval = 100000;
+    pc.epsabs = 1e-5;
+    pc.epsrel = 1e-5;
+    integrate1d(pc);
+
 }
 
 int main(){
-    test_cuba();
-    test_gsl();
+    printf("cuba     : \n"); test_cuba();
+    printf("gsl      : \n"); test_gsl();
+    printf("cubature : \n"); test_cubature();
     printf("\n*** 1d test ***\n");
     test_1d();
     return 0;

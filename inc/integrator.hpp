@@ -79,9 +79,10 @@ typedef int (*integrand_t)(const int*,const double*,const int*,double*,void*);
   */
 struct Integrator {
     virtual int exec(double* f,double* e) = 0;
-    integrand_t integrand;
-    int ndim,ncomp;
-    void* params;
+    integrand_t integrand = nullptr;
+    int ndim  = 0;
+    int ncomp = 0;
+    void* params = nullptr;
 };
 
 

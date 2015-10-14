@@ -2,16 +2,19 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 2.8.10)
 
 
-set(CMAKE_CXX_FLAGS "-std=c++11 -Wall -Wextra -Wshadow")
+set(CMAKE_CXX_FLAGS "-std=c++11 -Wall -Wextra -Wshadow -lm")
 set(CMAKE_CXX_FLAGS_DEBUG "-g")
 set(CMAKE_CXX_FLAGS_RELEASE "-O2")
 
 MESSAGE("-- [Info] CMAKE_CXX_FLAGS  are ${CMAKE_CXX_FLAGS}")
 
-include_directories("${PROJECT_SOURCE_DIR}/inc" "${PROJECT_SOURCE_DIR}/Cuba")
+include_directories("${PROJECT_SOURCE_DIR}/inc" 
+                    "${PROJECT_SOURCE_DIR}/Cuba"
+                    "${PROJECT_SOURCE_DIR}/cubature")
+
 
 add_subdirectory("${PROJECT_SOURCE_DIR}/src")
-
+add_subdirectory("${PROJECT_SOURCE_DIR}/cubature")
 
 set(Cuba_dir "${PROJECT_SOURCE_DIR}/Cuba")
 

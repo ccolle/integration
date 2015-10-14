@@ -9,20 +9,23 @@
   * the cuba library. This way you can more easily
   * try out different integration routines, while
   * keeping the common settings the same.
+  *
+  * c++11 is required for the default values setting
+  * without constructor...
   */
 struct Cuba_common : Integrator {
     // common settings for the cuba integrators...
-    int nvec;
-    double epsrel;
-    double epsabs;
-    int flags;
-    int mineval;
-    int maxeval;
-    char* statefile;
-    void* spin;
-    int neval;
-    int fail;
-    double* prob;
+    int nvec        = 1 ;
+    double epsrel   = 0.;
+    double epsabs   = 0.;
+    int flags       = 0x00;;
+    int mineval     = -1;
+    int maxeval     = -1;
+    char* statefile = nullptr;
+    void* spin      = nullptr;
+    int neval       = 0;
+    int fail        = 0;
+    double* prob    = nullptr;
     virtual int exec(double*,double*){ throw; } /**< this should never get called **/
 };
 
