@@ -14,9 +14,11 @@ You can always ask camille for some help...
 
 To build the code you need CMake.
 
-$> cd build;
-$> make
-$> make install
+  -  $> cd build;
+
+  -  $> make;
+
+  -  $> make install;
 
 
 Now you are all set. To use this in your code, include the headers in inc/
