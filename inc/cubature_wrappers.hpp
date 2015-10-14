@@ -1,0 +1,60 @@
+#ifndef CUBATURE_WRAPPERS_HPP
+#define CUBATURE_WRAPPERS_HPP
+
+#include "integrator.hpp"
+#include "cubature.h"
+
+struct cubature_integrand_wrapper{
+    static int f(unsigned ndim,const double* x,void* fdata,unsigned ncomp,double* fval){
+        struct cubature_integrand_wrapper c = *(struct cubature_integrand_wrapper*) fdata;
+        int nd = static_cast<int>(ndim);
+        int nc = static_cast<int>(ncomp);
+        return c.integrand(&nd,x,&nc,fval,c.params);
+    }
+    void* params;
+    integrand_t integrand;
+};
+
+struct Integrator_hcubature : Integrator {
+    virtual int exec(double* integral,double* error){
+        cubature_integrand_wrapper c;
+        c.params    = params;
+        c.integrand = integrand;
+
+        double xl[ndim];
+        double xu[ndim];
+        std::fill(xl,xl+ndim,0.); // unit cube!
+        std::fill(xu,xu+ndim,1.); // unit cube!
+        
+        return hcubature(ncomp,cubature_integrand_wrapper::f,(void*) &c,
+                        ndim,xl,xu,maxEval,epsabs,epsrel,norm,integral,error);
+        }
+    size_t maxEval;
+    double epsabs,epsrel;
+    error_norm norm; //<** this is a return variable, does not need to be set (i think...)
+};
+
+struct Integrator_pcubature : Integrator {
+    virtual int exec(double* integral,double* error){
+        cubature_integrand_wrapper c;
+        c.params    = params;
+        c.integrand = integrand;
+
+        double xl[ndim];
+        double xu[ndim];
+        std::fill(xl,xl+ndim,0.); // unit cube!
+        std::fill(xu,xu+ndim,1.); // unit cube!
+        
+        return pcubature(ncomp,cubature_integrand_wrapper::f,(void*) &c,
+                        ndim,xl,xu,maxEval,epsabs,epsrel,norm,integral,error);
+        }
+    size_t maxEval;
+    double epsabs,epsrel;
+    error_norm norm; //<** this is a return variable, does not need to be set (i think...)
+};
+
+
+
+
+
+#endif // CUBATURE_WRAPPERS_HPP
