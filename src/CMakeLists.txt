@@ -1,5 +1,4 @@
 
-FIND_PACKAGE(GSL REQUIRED)
 
 add_executable(test_integration test.cpp)
 target_link_libraries(test_integration "${GSL_LIBRARIES}")
