@@ -1,9 +1,9 @@
 
 CMAKE_MINIMUM_REQUIRED(VERSION 2.8.10)
 
-#set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/Modules/")
 set(CMAKE_MODULE_PATH "${CMAKE_MODULE_PATH};${CMAKE_SOURCE_DIR}/cmake/Modules/")
 MESSAGE("cmake_module_path is ${CMAKE_MODULE_PATH}")
+
 FIND_PACKAGE(GSL REQUIRED)
 
 set(CMAKE_CXX_FLAGS "-std=c++11 -Wall -Wextra -Wshadow -lm")

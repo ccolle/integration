@@ -2,7 +2,7 @@
 #define INTEGRATOR_HPP
 
 /* this is the same typedef as in the cuba libraries...
- * no proz if you try to typedef twice exactly the same thing
+ * no probz if you try to typedef twice exactly the same thing
  **/
 typedef int (*integrand_t)(const int*,const double*,const int*,double*,void*);
 
