@@ -63,8 +63,9 @@ void integrate(Integrator &i,integrand_t integrand){ // <-- this function would 
     i.ncomp = 1;
     i.integrand = integrand;
     struct genz_params gp;
-    double c[] = {1.,1.,1.};
-    double w[] = {1.,1.,1.};
+    /** see cuba.pdf (of the cuba library for more explanation of w,c parameters **/
+    double c[] = {1.,1.,1.}; // sum_i abs( c[i] ) determines difficulty of integrand, smaller -> more difficult
+    double w[] = {1.,1.,1.}; // should not influence difficulty, changes location of peaks...
     gp.c = c;
     gp.w = w;
     i.params = (void*) &gp;
