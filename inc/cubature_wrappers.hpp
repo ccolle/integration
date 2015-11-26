@@ -3,6 +3,7 @@
 
 #include "integrator.hpp"
 #include "cubature.h"
+#include <algorithm> // std::fill
 
 struct cubature_integrand_wrapper{
     static int f(unsigned ndim,const double* x,void* fdata,unsigned ncomp,double* fval){
