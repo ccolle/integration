@@ -17,7 +17,6 @@ void test_cuba(integrand_t myIntegrand){
     c.maxeval = 100000;
     c.statefile = nullptr;
     c.spin      = nullptr;
-    c.prob      = new double(0.);
     
     Integrator_vegas vi(c);
     vi.seed   = 1234;
@@ -60,7 +59,6 @@ void test_cuba(integrand_t myIntegrand){
     integrate(si,myIntegrand);
     //Integrator_divonne di(c);
 
-    delete c.prob;
 }
 
 void test_cubature(integrand_t myIntegrand){

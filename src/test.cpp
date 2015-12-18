@@ -68,7 +68,6 @@ void test_cuba(){
     c.maxeval = 100000;
     c.statefile = nullptr;
     c.spin      = nullptr;
-    c.prob      = new double(0.);
     
     Integrator_vegas vi(c);
     vi.seed   = 1234;
@@ -83,7 +82,6 @@ void test_cuba(){
 
     integrate(vi);
     integrate(ci);
-    delete c.prob;
 }
 
 void test_gsl(){
@@ -126,7 +124,6 @@ void test_1d(){
     c.maxeval = 100000;
     c.statefile = nullptr;
     c.spin      = nullptr;
-    c.prob      = new double(0.);
     
     Integrator_vegas vi(c);
     vi.seed   = 1234;
@@ -140,8 +137,6 @@ void test_1d(){
     
     integrate1d(vi);
     integrate1d(ci);
-
-    delete c.prob;
 
     Integrator_gsl_monte_plain p;
     p.calls = 100000;

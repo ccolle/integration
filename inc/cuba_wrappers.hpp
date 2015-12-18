@@ -25,7 +25,7 @@ struct Cuba_common : Integrator {
     void* spin      = nullptr;
     int neval       = 0;
     int fail        = 0;
-    double* prob    = nullptr;
+    double prob     = -999.;
     virtual int exec(double*,double*){ throw; } /**< this should never get called **/
 };
 
@@ -36,7 +36,7 @@ struct Integrator_vegas : Cuba_common  {
         Vegas(ndim,ncomp,integrand,params,nvec,
               epsrel,epsabs,flags,seed,mineval,
               maxeval,nstart,nincrease,nbatch,gridno,
-              statefile,spin,&neval,&fail,integral,error,prob);
+              statefile,spin,&neval,&fail,integral,error,&prob);
         return 0; // "succes"
     }
     
@@ -55,7 +55,7 @@ struct Integrator_suave : Cuba_common {
             epsrel,epsabs,flags,seed,mineval,
             maxeval,nnew,nmin,flatness,statefile,
             spin,&nregions,&neval,&fail,integral,
-            error,prob);
+            error,&prob);
             return 0;
     }
 };
@@ -71,7 +71,7 @@ struct Integrator_cuhre : Cuba_common {
             epsrel,epsabs,flags,
             mineval,maxeval,key,
             statefile,spin,&nregions,&neval,&fail,
-            integral,error,prob);
+            integral,error,&prob);
             return 0;
     }
 };
@@ -92,7 +92,7 @@ struct Integrator_divonne : Cuba_common {
             maxpass,border,maxchisq,mindeviation,
             ngiven,ldxgiven,xgiven,nextra,peakfinder,
             statefile,spin,&nregions,&neval,&fail,
-            integral,error,prob);
+            integral,error,&prob);
         return 0;
     }
 };
