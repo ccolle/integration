@@ -104,11 +104,11 @@ struct Integrator_gsl_monte_vegas : Integrator {
         //gsl_monte_vegas_integrate(&G,xl,xu,ndim,calls,r,s,integral,error);
         
         // integrate with low number of calls to map the function
-        gsl_monte_vegas_integrate(&G, xl, xu, ndim, calls/100, r, s, integral, error);
+        gsl_monte_vegas_integrate(&G, xl, xu, ndim, warm_up_calls, r, s, integral, error);
 
         // iterate integration until convergence is reached
-        while (fabs(gsl_monte_vegas_chisq(s) - 1.0) > 0.5) {
-            gsl_monte_vegas_integrate(&G,xl,xu,ndim,calls/10,r,s,integral,error);
+        while (fabs(gsl_monte_vegas_chisq(s) - 1.0) > delta_chi_squared) {
+            gsl_monte_vegas_integrate(&G, xl, xu, ndim, in_iteration_calls, r, s, integral, error);
         }
 
         // check to see if the chi-squared value for the result is ok
@@ -120,7 +120,10 @@ struct Integrator_gsl_monte_vegas : Integrator {
         gsl_rng_free(r);
         return 0; // succes!
         }
-    size_t calls;
+    size_t warm_up_calls; // small number of calls to map the function
+    size_t in_iteration_calls; // number of calls in integration during iteration to convergence
+    double delta_chi_squared; // convergence criterium: if the calculated chi-squared per dof 
+                              // lies within this distance of the value 1, the iteration is stopped.
 };
 
 struct Integrator_gsl_monte_miser : Integrator {
