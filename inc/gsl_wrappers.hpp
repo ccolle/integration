@@ -101,8 +101,21 @@ struct Integrator_gsl_monte_vegas : Integrator {
         r = gsl_rng_alloc(T);
         
         gsl_monte_vegas_state* s = gsl_monte_vegas_alloc(ndim);
-        gsl_monte_vegas_integrate(&G,xl,xu,ndim,calls,r,s,integral,error);
+        //gsl_monte_vegas_integrate(&G,xl,xu,ndim,calls,r,s,integral,error);
         
+        // integrate with low number of calls to map the function
+        gsl_monte_vegas_integrate(&G, xl, xu, ndim, calls/100, r, s, integral, error);
+
+        // iterate integration until convergence is reached
+        while (fabs(gsl_monte_vegas_chisq(s) - 1.0) > 0.5) {
+            gsl_monte_vegas_integrate(&G,xl,xu,ndim,calls/10,r,s,integral,error);
+        }
+
+        // check to see if the chi-squared value for the result is ok
+        std::cout << std::endl <<
+                     "chi-squared per d.o.f. for integration result: " <<
+                     gsl_monte_vegas_chisq(s) << std::endl;
+
         gsl_monte_vegas_free(s);
         gsl_rng_free(r);
         return 0; // succes!
