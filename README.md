@@ -26,4 +26,8 @@ To build the code you need CMake.
 Now you are all set. To use this in your code, include the headers in inc/
 and link to the libraries in lib/
 
+Your compilation command might look something like (untested...)
+
+g++ yourfile.cpp -I/path/to/integration/inc -L/path/to/integration/lib -Wl,-rpath=/path/to/integration/lib -lcuba -lcubature $(gsl-config --libs) -o yourexec
+
 
