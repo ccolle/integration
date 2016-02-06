@@ -5,6 +5,7 @@
 #include "cuba_wrappers.hpp"
 #include "gsl_wrappers.hpp"
 #include "cubature_wrappers.hpp"
+#include <iostream>
 
 
 /********************************************/
@@ -29,6 +30,15 @@ int myintegrand(const int* ndim,const double* x,const int* ncomp,double* f,void*
     f[0] = p.a*x[0]*x[1]*exp(-sin(x[0])); // should give a/4
     return 0; // succes
 }
+
+int myintegrand_multicomp(const int* ndim, const double* x, const int* ncomp, double* f,void* param){
+    assert(*ndim==2 && *ncomp==3);
+    f[0] = x[0]*x[1];
+    f[1] = x[0]-x[1];
+    f[2] = x[1]+x[0];
+    return 0; // succes
+}
+
 void integrate1d(struct Integrator& i){
     double f;
     double e;
@@ -54,6 +64,18 @@ void integrate(struct Integrator& i){
     i.exec(&f,&e);
     printf("result,error :   %11.6e, %8.3e\n",f,e);
 }
+
+void integrate_mcomp(struct Integrator &i){
+    double f[3];
+    double e[3];
+    i.ndim  = 2;
+    i.ncomp = 3;
+    i.params = nullptr;
+    i.integrand = myintegrand_multicomp;
+    i.exec(f,e);
+    printf("[multicomp] result,error : (% .2e,% .2e,% .2e) , (% .2e,% .2e,% .2e)\n",f[0],f[1],f[2],e[0],e[1],e[2]);
+}
+
 /********************************************/
 /**          this is the end of it         **/
 /********************************************/
@@ -82,6 +104,9 @@ void test_cuba(){
 
     integrate(vi);
     integrate(ci);
+    
+    integrate_mcomp(vi);
+    integrate_mcomp(ci);
 }
 
 void test_gsl(){
@@ -90,7 +115,9 @@ void test_gsl(){
     integrate(p);
 
     Integrator_gsl_monte_vegas v;
-    v.calls = 100000;
+    v.warm_up_calls = 1000;
+    v.in_iteration_calls = 10000;
+    v.delta_chi_squared = 0.5;
     integrate(v);
 
     Integrator_gsl_monte_miser m;
@@ -103,15 +130,19 @@ void test_cubature(){
     hc.maxEval = 100000;
     hc.epsabs  = 0.;
     hc.epsrel  = 1e-4;
+    hc.err_norm= ERROR_INDIVIDUAL;
     
     integrate(hc);
+    integrate_mcomp(hc);
 
     Integrator_pcubature pc;
     pc.maxEval = 100000;
     pc.epsabs  = 0.;
     pc.epsrel  = 1e-4;
+    pc.err_norm= ERROR_INDIVIDUAL;
 
     integrate(pc);
+    integrate_mcomp(pc);
 }
 
 void test_1d(){

@@ -26,13 +26,13 @@ struct Integrator_hcubature : Integrator {
         double xu[ndim];
         std::fill(xl,xl+ndim,0.); // unit cube!
         std::fill(xu,xu+ndim,1.); // unit cube!
-        
+
         return hcubature(ncomp,cubature_integrand_wrapper::f,(void*) &c,
-                        ndim,xl,xu,maxEval,epsabs,epsrel,norm,integral,error);
+                        ndim,xl,xu,maxEval,epsabs,epsrel,err_norm,integral,error);
         }
     size_t maxEval;
     double epsabs,epsrel;
-    error_norm norm; //<** this is a return variable, does not need to be set (i think...)
+    error_norm err_norm; //<** options are: [ERROR_L1,ERROR_L2,ERROR_LINF,ERROR_INDIVIDUAL,ERROR_PAIRED] 
 };
 
 struct Integrator_pcubature : Integrator {
@@ -47,11 +47,11 @@ struct Integrator_pcubature : Integrator {
         std::fill(xu,xu+ndim,1.); // unit cube!
         
         return pcubature(ncomp,cubature_integrand_wrapper::f,(void*) &c,
-                        ndim,xl,xu,maxEval,epsabs,epsrel,norm,integral,error);
+                        ndim,xl,xu,maxEval,epsabs,epsrel,err_norm,integral,error);
         }
     size_t maxEval;
     double epsabs,epsrel;
-    error_norm norm; //<** this is a return variable, does not need to be set (i think...)
+    error_norm err_norm; //<** options are: [ERROR_L1,ERROR_L2,ERROR_LINF,ERROR_INDIVIDUAL,ERROR_PAIRED] 
 };
 
 

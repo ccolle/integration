@@ -80,10 +80,12 @@ void test_cubature(integrand_t myIntegrand){
 
 void test_gsl(integrand_t myIntegrand){
     Integrator_gsl_monte_plain p;     
-    p.calls = 10000; // max number of evals
+    p.calls = 10000;
 
     Integrator_gsl_monte_vegas v;
-    v.calls = 10000;
+    v.warm_up_calls = 1000; 
+    v.in_iteration_calls = 1000;
+    v.delta_chi_squared = 0.5;
 
     Integrator_gsl_monte_miser m;
     m.calls = 10000;

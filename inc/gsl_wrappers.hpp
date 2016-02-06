@@ -111,11 +111,6 @@ struct Integrator_gsl_monte_vegas : Integrator {
             gsl_monte_vegas_integrate(&G, xl, xu, ndim, in_iteration_calls, r, s, integral, error);
         }
 
-        // check to see if the chi-squared value for the result is ok
-        std::cout << std::endl <<
-                     "chi-squared per d.o.f. for integration result: " <<
-                     gsl_monte_vegas_chisq(s) << std::endl;
-
         gsl_monte_vegas_free(s);
         gsl_rng_free(r);
         return 0; // succes!
