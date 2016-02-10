@@ -3,7 +3,7 @@
 
 #include "integrator.hpp"
 #include "cuba.h"
-#include <iostream>
+
 /** A cuba common struct which holds the common
   * settings for all four integration routines in
   * the cuba library. This way you can more easily
