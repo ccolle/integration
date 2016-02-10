@@ -32,10 +32,15 @@ int myintegrand(const int* ndim,const double* x,const int* ncomp,double* f,void*
 }
 
 int myintegrand_multicomp(const int* ndim, const double* x, const int* ncomp, double* f,void* param){
-    assert(*ndim==2 && *ncomp==3);
+    assert(*ndim==2 && *ncomp==8);
     f[0] = x[0]*x[1];
     f[1] = x[0]-x[1];
     f[2] = x[1]+x[0];
+    f[3] = 1;
+    f[4] = 1;
+    f[5] = 1;
+    f[6] = 1;
+    f[7] = 1;
     return 0; // succes
 }
 
@@ -66,14 +71,16 @@ void integrate(struct Integrator& i){
 }
 
 void integrate_mcomp(struct Integrator &i){
-    double f[3];
-    double e[3];
     i.ndim  = 2;
-    i.ncomp = 3;
+    i.ncomp = 8;
+    double f[i.ncomp];
+    double e[i.ncomp];
     i.params = nullptr;
     i.integrand = myintegrand_multicomp;
     i.exec(f,e);
-    printf("[multicomp] result,error : (% .2e,% .2e,% .2e) , (% .2e,% .2e,% .2e)\n",f[0],f[1],f[2],e[0],e[1],e[2]);
+    for (int c=0;c<i.ncomp;c++){
+        printf("[multicomp] component[%d] : result,error : (% .2e) , (% .2e)\n",c,f[c],e[c]);
+    }
 }
 
 /********************************************/
@@ -198,7 +205,6 @@ int main(){
     printf("cuba     : \n"); test_cuba();
     printf("gsl      : \n"); test_gsl();
     printf("cubature : \n"); test_cubature();
-    printf("\n*** 1d test ***\n");
-    test_1d();
+    printf("\n*** 1d test ***\n"); test_1d();
     return 0;
 }
