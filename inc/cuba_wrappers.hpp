@@ -30,12 +30,12 @@ struct Cuba_common : Integrator {
     /**
      * @brief init, this makes sure prob array is allocated with size ncomp (not done @ construction time as ncomp is unknown then)
      */
-    void init(){ delete prob; prob = new double[ncomp]; }// this makes sure the prob array is allocated with size ncomp
+    void init(){ delete[] prob; prob = new double[ncomp]; }// this makes sure the prob array is allocated with size ncomp
     virtual int exec(double*,double*){ throw; }          // this should never get called
     /**
       * @brief destructor, make sure the prob array is deleted correctly.
       */
-    ~Cuba_common(){ delete prob; }
+    ~Cuba_common(){ delete[] prob; }
 };
 
 struct Integrator_vegas : Cuba_common  {
