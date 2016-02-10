@@ -14,13 +14,13 @@ You can always ask camille for some help...
 
 To build the code you need CMake.
 
-  -  $> cd build;
+  1-  $> cd build;
 
-  -  $> cmake -DCMAKE_BUILD_TYPE=[RELEASE|DEBUG|...] ..
+  2-  $> cmake -DCMAKE_BUILD_TYPE=RELEASE ..
 
-  -  $> make;
+  3-  $> make;
 
-  -  $> make install;
+  4-  $> make install;
 
 
 Now you are all set. To use this in your code, include the headers in inc/
