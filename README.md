@@ -9,7 +9,25 @@ settings (as precision, max number of evals, etc...)
 
 If you wish to add your own integration routines, see "*_wrapper.hpp" in inc/
 
-You can always ask camille for some help...
+[IMPORTANT]
+    The Cuba routines are intended for high dimensional integrands!
+    For dimensions 1,2,(3?) you are probably better of using the other
+    algorithms... (Vegas might work though)
+
+[DEBUGGING]
+-Cuba v4.2:
+    It seems that valgrind finds errors for the supplied demo-c.c file
+    for Suave and Divonne. Vegas and Cuhre seem to work fine though.
+    The valgrind warning '72,704 bytes in 1 blocks are still reachable in loss record'
+    is apparently a well known bug (or feature according to the devs...)
+    
+    Cuhre seems to fail miserably for 1D integrands. It does not evaluate
+    the integrand at hand once!
+    
+    
+
+
+You can always ask Camille for some help...
 
 
 To build the code you need CMake.
