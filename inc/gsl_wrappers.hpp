@@ -114,7 +114,7 @@ struct Integrator_gsl_monte_vegas : Integrator {
         gsl_monte_vegas_free(s);
         gsl_rng_free(r);
         return 0; // succes!
-        }
+    }
     size_t warm_up_calls; // small number of calls to map the function
     size_t in_iteration_calls; // number of calls in integration during iteration to convergence
     double delta_chi_squared; // convergence criterium: if the calculated chi-squared per dof 

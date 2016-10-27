@@ -3,6 +3,7 @@
 
 #include "integrator.hpp"
 #include "cuba.h"
+#include <iostream>
 
 /** A cuba common struct which holds the common
   * settings for all four integration routines in
@@ -30,7 +31,7 @@ struct Cuba_common : Integrator {
     /**
      * @brief init, this makes sure prob array is allocated with size ncomp (not done @ construction time as ncomp is unknown then)
      */
-    void init(){ delete[] prob; prob = new double[ncomp]; }// this makes sure the prob array is allocated with size ncomp
+    void init(){ if (prob != nullptr) {delete[] prob;}; prob = new double[ncomp]; }// this makes sure the prob array is allocated with size ncomp
     virtual int exec(double*,double*){ throw; }          // this should never get called
     /**
       * @brief destructor, make sure the prob array is deleted correctly.
@@ -79,6 +80,9 @@ struct Integrator_cuhre : Cuba_common {
 
     virtual int exec(double* integral,double* error){
         Cuba_common::init();
+        if (ndim == 1){
+            std::cerr << "[WARNING] You are using Cuhre for 1D integrands. Cuhre does not work for this! " << std::endl;
+        }
         Cuhre(ndim,ncomp,integrand,params,nvec,
             epsrel,epsabs,flags,
             mineval,maxeval,key,
