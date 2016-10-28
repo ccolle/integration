@@ -66,9 +66,9 @@ int myintegrand_multicomp_integral(const int* ncomp, double* f,void* param){
 }
 
 bool test_integration(struct Integrator& i,integrand_t myintegrand, int (*solution)(const int*,double*,void*)){
-    double f[i.ncomp] = {}; // the result of the integration
-    double e[i.ncomp] = {}; // the estimated error of the integration routine
-    double a[i.ncomp] = {}; // the analytical result
+    double f[i.ncomp]; // the result of the integration
+    double e[i.ncomp]; // the estimated error of the integration routine
+    double a[i.ncomp]; // the analytical result
     i.integrand = myintegrand;
     i.exec(f,e);
     solution(&i.ncomp,a,i.params);
