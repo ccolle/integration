@@ -7,6 +7,7 @@
 #include "cubature_wrappers.hpp"
 #include <iostream>
 #include <string>
+#include <cmath>
 
 struct integrand_params{
     int a;
